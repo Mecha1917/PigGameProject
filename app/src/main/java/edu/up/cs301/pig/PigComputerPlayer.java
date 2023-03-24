@@ -43,6 +43,6 @@ public class PigComputerPlayer extends GameComputerPlayer {
                 game.sendAction(new PigRollAction(this));
             }
         }
+        sleep(200);
     }//receiveInfo
-
 }

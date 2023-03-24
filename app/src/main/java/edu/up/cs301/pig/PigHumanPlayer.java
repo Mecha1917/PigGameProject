@@ -31,6 +31,7 @@ public class PigHumanPlayer extends GameHumanPlayer implements OnClickListener {
     private TextView    messageTextView     = null;
     private ImageButton dieImageButton      = null;
     private Button      holdButton          = null;
+    private int         turnTotal           = 0;
 
     // the android activity that we are running
     private GameMainActivity myActivity;
@@ -60,7 +61,32 @@ public class PigHumanPlayer extends GameHumanPlayer implements OnClickListener {
      */
     @Override
     public void receiveInfo(GameInfo info) {
-        int value = 1 + 2;
+        if (!(info instanceof PigGameState)){
+            flash(Color.RED, 1);
+        }
+        PigGameState pig = (PigGameState) info;
+        playerScoreTextView.setText("" + pig.getPlayer0Score());
+        oppScoreTextView.setText("" + pig.getPlayer1Score());
+        turnTotalTextView.setText("" + turnTotal + 1);
+        if (pig.getDiceValue() == 1) {
+            dieImageButton.setImageResource(R.drawable.face1);
+        }
+        else if (pig.getDiceValue() == 2) {
+            dieImageButton.setImageResource(R.drawable.face2);
+        }
+        else if (pig.getDiceValue() == 3) {
+            dieImageButton.setImageResource(R.drawable.face3);
+        }
+        else if (pig.getDiceValue() == 4) {
+            dieImageButton.setImageResource(R.drawable.face4);
+        }
+        else if (pig.getDiceValue() == 5) {
+            dieImageButton.setImageResource(R.drawable.face5);
+        }
+        else {
+            dieImageButton.setImageResource(R.drawable.face6);
+        }
+
     }//receiveInfo
 
     /**
@@ -71,7 +97,12 @@ public class PigHumanPlayer extends GameHumanPlayer implements OnClickListener {
      * 		the button that was clicked
      */
     public void onClick(View button) {
-        //TODO  You will implement this method to send appropriate action objects to the game
+        if (button instanceof Button){
+            game.sendAction(new PigHoldAction(this));
+        }
+        else if (button instanceof ImageButton){
+            game.sendAction(new PigRollAction(this));
+        }
     }// onClick
 
     /**
