@@ -52,9 +52,19 @@ public class PigLocalGame extends LocalGame {
             if (p.getId() == 0){
                 p.setPlayer0Score(p.getPlayer0Score() + p.getHoldAmountValue());
             }
-            else {
+            else if (p.getId() == 1){
                 p.setPlayer1Score(p.getPlayer1Score() + p.getHoldAmountValue());
             }
+            else {
+                return false;
+            }
+            if (p.getId() == 1){
+                p.setId(0);
+            }
+            else {
+                p.setId(1);
+            }
+            p.setHoldAmountValue(0);
             return true;
         }
         else if (action instanceof PigRollAction) {
@@ -98,8 +108,11 @@ public class PigLocalGame extends LocalGame {
         if (p.getPlayer0Score() >= 50){
             return "Player " + p.getId() + " with a score of " + p.getPlayer0Score();
         }
-        else {
+        else if (p.getPlayer1Score() >= 50) {
             return "Player " + p.getId() + " with a score of " + p.getPlayer1Score();
+        }
+        else {
+            return null;
         }
     }
 }// class PigLocalGame

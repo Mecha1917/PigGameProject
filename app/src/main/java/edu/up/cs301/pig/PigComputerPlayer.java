@@ -4,6 +4,7 @@ import edu.up.cs301.game.GameComputerPlayer;
 import edu.up.cs301.game.actionMsg.GameAction;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.util.Tickable;
+import java.util.Random;
 
 /**
  * An AI for Pig
@@ -28,7 +29,20 @@ public class PigComputerPlayer extends GameComputerPlayer {
      */
     @Override
     protected void receiveInfo(GameInfo info) {
-        // TODO  You will implement this method
+        PigGameState pig = (PigGameState) info;
+        if (pig.getId() != 1){
+            return;
+        }
+        else {
+            Random random = new Random();
+            boolean rand = random.nextBoolean();
+            if (rand == true){
+                game.sendAction(new PigHoldAction(this));
+            }
+            else {
+                game.sendAction(new PigRollAction(this));
+            }
+        }
     }//receiveInfo
 
 }
